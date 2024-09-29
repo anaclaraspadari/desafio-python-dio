@@ -65,9 +65,9 @@ def criar_usuario(usuarios):
         print("\n Já existe usuário com esse CPF!")
         return
 
-    nome=input("Nome completo:")
-    data_nascimento=input("Data de nascimento (dd-mm-aa):")
-    endereco=input("Endereço (logradouro, número, bairro, cidade/sigla estado):")
+    nome=input("Nome completo: ")
+    data_nascimento=input("Data de nascimento (dd-mm-aa): ")
+    endereco=input("Endereço (logradouro, número, bairro, cidade/sigla estado): ")
     usuarios.append({"nome": nome, "data_nascimento": data_nascimento, "cpf": cpf, "endereco":endereco})
     
     print("\n===== Usuário cadastrado com sucesso! =====")
