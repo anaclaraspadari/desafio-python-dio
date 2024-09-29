@@ -76,7 +76,26 @@ def filtrar_usuario(cpf, usuarios):
     usuarios_filtrados=[usuario for usuario in usuarios if usuario["cpf"]==cpf]
     return usuarios_filtrados[0] if usuarios_filtrados else None
     
+def criar_conta(agencia, numero_conta, usuarios):
+    cpf=input("CPF do usuário:")
+    usuario=filtrar_usuario(cpf, usuarios)
     
+    if usuario:
+        print("\nConta criada com sucesso!")
+        return {"agencia": agencia, "numero_conta": numero_conta, "usuario": usuario}
+    else:
+        print("\nUsuário não encontrado, fluxo de criação de conta encerrado!")
+        
+def listar_contas(contas):
+    for conta in contas:
+        linha=f"""\
+            Agência:\t{conta['agencia']}
+            C/C:\t\t{conta['numero_conta']}
+            Titular:\t{conta['usuario']['nome']}
+        """
+        print("="*100)
+        print(textwrap.dedent(linha))
+
 
 def main():
     saldo=0
@@ -90,24 +109,38 @@ def main():
     
     while True:
         opcao=menu()
-        if opcao==1:
+        if opcao=="1":
             valor=float(input("Valor do depósito:"))
             saldo, extrato=depositar(saldo, valor, extrato)
         
-        elif opcao==2:
+        elif opcao=="2":
             valor=float(input("Valor do saque:"))
             saldo, extrato=sacar(saldo=saldo, valor=valor, extrato=extrato, limite=limite, numero_saques=numero_saques, limite_saques=LIMITE_SAQUES)
         
-        elif opcao==3:
+        elif opcao=="3":
             exibir_extrato(saldo, extrato=extrato)
         
-        elif opcao==4:
+        elif opcao=="4":
             criar_usuario(usuarios)
             
-        elif opcao==5:
+        elif opcao=="5":
+            numero_conta=len(contas)+1
+            conta=criar_conta(AGENCIA, numero_conta, usuarios)
             
+            if conta:
+                contas.append(conta)
+                
+        elif opcao=="6":
+            listar_contas(contas)
+        
+        elif opcao=="0":
+            print("Obrigada, volte sempre!")
+            break
+        
+        else:
+            print("Operação inválida, por favor selecione novamente a operação desejada.")
             
-            
+main()
     
 # menu="""
 
